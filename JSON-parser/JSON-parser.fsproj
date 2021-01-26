@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Util.fs" />
+    <Compile Include="JsonNode.fs" />
+    <Compile Include="String.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="Test.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+  <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.1.1" />
   </ItemGroup>
 
 </Project>
