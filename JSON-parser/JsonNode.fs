@@ -6,4 +6,5 @@ type Node =
     | Number of int
     | String of string
     | Boolean of bool
-    | Object of NotYetDefined
+    | Object of Object list
+and Object = string * Node

@@ -9,7 +9,7 @@
   <ItemGroup>
     <Compile Include="Util.fs" />
     <Compile Include="JsonNode.fs" />
-    <Compile Include="String.fs" />
+    <Compile Include="JsonString.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Test.fs" />
     <Compile Include="Program.fs" />
