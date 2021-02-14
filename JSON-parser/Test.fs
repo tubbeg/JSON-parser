@@ -6,8 +6,8 @@ open FParsec
 
 
 let runTests =
-    let p = sep
-    testParser p " , "
-    let p2 = stringLiteral
-    testParser p2 "\"mystring\""
+    testParser sep " , "
+    testParser stringLiteral "\"mystring\""
+    testParser intConstant "33"
+    testParser stringConstant "\"mystring\""
     0

@@ -1,5 +1,4 @@
 ﻿module JsonNode
-open Util
 
 type Node =
     | Array of Node array

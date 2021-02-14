@@ -17,5 +17,5 @@ let run2 p strContent file = runParserOnString p () file strContent
 let testParser parser testCase =
     let result = run parser testCase
     match result with
-    | Success(_) -> printfn "Success!"
+    | Success(r, _, _) -> printfn "Success! %A" r
     | Failure(e, _, _) -> printfn "Error: %A" e
