@@ -22,8 +22,9 @@ let trueConstant = trueBool >>% (Node.Boolean true)
 let falseConstant = falseBool >>% (Node.Boolean false)
 
 let sep : Parser<_> = str_ws ","
-let betweenBrackets prsr =
-    ws >>. (between (str_ws "{") (str_ws "}") prsr)
-
+let betweenBrackets p =
+    ws >>. ((str_ws "{") >>. p .>> (str_ws "}"))
+    
 let listOfParsers = trueConstant <|> falseConstant <|> intConstant <|> stringConstant
-let jsonParser = betweenBrackets listOfParsers
+let recordElement list = sepEndBy list sep
+let jsonParser = betweenBrackets (recordElement listOfParsers)

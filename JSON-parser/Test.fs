@@ -14,5 +14,5 @@ let runTests =
     testParser falseConstant "false"
     testParser jsonParser "{true}"
     testParser jsonParser "{9}"
-    testParser jsonParser "{\"mystring\"}"
+    testParser jsonParser "{\"mystring\",true,3,\"mystring\"}"
     0

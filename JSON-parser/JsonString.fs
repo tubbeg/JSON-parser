@@ -17,6 +17,6 @@ let stringLiteral : Parser<_> =
     // can't handle escape characters right now :/
     let parseManyChar = manyChars (anyChar) // <|> escape char )
 
-
-    //between is essentially: (pstring "\"") >>. parseManyChar .>> (pstring "\"")
-    between (str "\"") (str "\"") parseManyChar
+    //this is basically what Fparsec between does, but I find this
+    //this easier to read
+    (str_ws "\"" >>. parseManyChar .>> str_ws "\"")
