@@ -16,4 +16,5 @@ let runTests =
     testParser jsonParser "{true}"
     testParser jsonParser "{9}"
     testParser jsonParser "{{\"mystring\"}}"
+    testParser jsonParser "{\"mystring\",true,{{999}},3,\"mystring\"}"
     0

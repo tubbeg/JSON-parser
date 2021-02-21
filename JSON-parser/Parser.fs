@@ -51,6 +51,6 @@ let listOfParsers =
     <|> falseConstant
     <|> intConstant
     <|> stringConstant
-
-
-let jsonParser = betweenBrackets listOfParsers
+    
+let recordElement list = sepEndBy list sep
+let jsonParser = betweenBrackets (recordElement listOfParsers)
