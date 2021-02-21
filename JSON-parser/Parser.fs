@@ -4,6 +4,18 @@ open Util
 open JsonNode
 open JsonString
 
+(*This is necessary for recursive grammar, and also possibly because
+of F# type inference. What createParserForwardedToRef does is
+creating a parser (jsonValue) which forwards all parser calls to
+the parser in jsonReference (reference cell). The reference cell is
+mutable, and initially holds what is basically a dummy parser which
+throws an exception when called. This is why this parser must be
+initialized*)
+let jsonValue, jsonReference = createParserForwardedToRef<Node, unit>()
+
+let initParser ref list =
+    ref := list
+
 // Fparsec |>> is a custom operator which
 //runs a parser (num) and then applies a function
 //which in this case is a type (Node.Number)
@@ -22,8 +34,23 @@ let trueConstant = trueBool >>% (Node.Boolean true)
 let falseConstant = falseBool >>% (Node.Boolean false)
 
 let sep : Parser<_> = str_ws ","
+
 let betweenBrackets prsr =
     ws >>. (between (str_ws "{") (str_ws "}") prsr)
 
-let listOfParsers = trueConstant <|> falseConstant <|> intConstant <|> stringConstant
+//might remove this later
+let spawn (o : Node) =
+    let newObjectList = Node.Obj(o::[])
+    newObjectList
+
+let objectParser = betweenBrackets jsonValue |>> spawn
+
+let listOfParsers =
+    objectParser
+    <|> trueConstant
+    <|> falseConstant
+    <|> intConstant
+    <|> stringConstant
+
+
 let jsonParser = betweenBrackets listOfParsers
