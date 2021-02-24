@@ -5,4 +5,4 @@ type Node =
     | Number of int
     | String of string
     | Boolean of bool
-    | Obj of Node list
+    | Obj of (Node) list

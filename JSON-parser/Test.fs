@@ -6,7 +6,7 @@ open FParsec
 
 
 let runTests =
-    initParser jsonReference listOfParsers
+    initParser listOfParsers
     testParser sep " , "
     testParser stringLiteral "\"mystring\""
     testParser intConstant "3"
@@ -15,6 +15,6 @@ let runTests =
     testParser falseConstant "false"
     testParser jsonParser "{true}"
     testParser jsonParser "{9}"
-    testParser jsonParser "{{\"mystring\"}}"
-    testParser jsonParser "{\"mystring\",true,{{999}},3,\"mystring\"}"
+    testParser objectParser "{{\"mystring\"}}"
+    testParser objectParser "{\"mystring\",{true,false,{{true}}},\"mystring\"}"
     0
