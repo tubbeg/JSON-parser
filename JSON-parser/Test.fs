@@ -16,7 +16,7 @@ let runTests =
     testParser objectParser "{\"number\":true}"
     //testParser jsonParser "{9}"
     testParser objectParser "{\"number\":{\"mystring\":\"mystring\" ,\"myval\":{\"val\":3243}, \"mystring\":91234},\"number\":34234,\"object\":{\"mystring\":\"string\"}}"
-    let testString = readLinesFromFile "./jsonTest.json" |> convertSeqToString
+    let testString = readFileLinesToString "./jsonTest.json"
     testParser objectParser testString
     (*
     testParser objectParser "{\"mystring\",{true,false,{{true}}},\"mystring\"}"*)

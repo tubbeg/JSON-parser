@@ -5,11 +5,11 @@ open JsonNode
 open JsonString
 
 
-let sep : Parser<_> = str_ws ","
+let sep : Parser<_> = ws >>. str_ws "," .>> ws
 //this needs to change
 let recordElement list = sepEndBy list sep
-let recordPattern p = ws >>. stringLiteral >>. str_ws ":" >>. p
-let parseRecordElement p = recordElement (recordPattern p)
+//let recordPattern p = ws >>. stringLiteral >>. str_ws ":" >>. p
+//let parseRecordElement p = recordElement (recordPattern p)
 
 (*This is necessary for recursive grammar, and also possibly because
 of F# type inference. What createParserForwardedToRef does is
@@ -40,19 +40,33 @@ let falseBool : Parser<string> = str "false"
 let trueConstant = trueBool >>% (Node.Boolean true)
 let falseConstant = falseBool >>% (Node.Boolean false)
 
-let betweenBrackets prsr =
-    ws >>. (between (str_ws "{") (str_ws "}") prsr)
+let betweenBraces prsr =
+    ws >>. (str_ws "{" >>. prsr .>> str_ws "}")
   
-let objectParser = betweenBrackets (recordElement jsonValue)
+let betweenBrackets prsr =
+    ws >>. (str_ws "[" >>. ws >>. prsr .>> ws .>> str_ws "]")
+
+let arrayParser = betweenBrackets (recordElement jsonValue)
+
+let arrayConstant = arrayParser |>> (fun a -> Node.Array((a |> List.toArray)))
+
+let keyPattern = 
+    stringLiteral >>. (str_ws ":") >>. ws
+    
+let objectParser = betweenBraces (recordElement (keyPattern >>. jsonValue))
 let objectConstant = objectParser |>> (fun n -> Obj(n))
 
+
 let listOfParsers =
-    stringLiteral >>. (str_ws ":") >>. ws >>. (
-        objectConstant
+    //keyPattern >>. (
+        arrayConstant
+        <|> objectConstant
         <|> trueConstant
         <|> falseConstant
         <|> intConstant
         <|> stringConstant
-    )
-    
+    //)
+
+
+
 //let jsonParser = betweenBrackets jsonValue
