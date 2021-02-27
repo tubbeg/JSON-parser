@@ -13,8 +13,9 @@ let runTests =
     testParser stringConstant "\"mystring\""
     testParser trueConstant "true"
     testParser falseConstant "false"
-    testParser jsonParser "{true}"
-    testParser jsonParser "{9}"
-    testParser objectParser "{{\"mystring\"}}"
-    testParser objectParser "{\"mystring\",{true,false,{{true}}},\"mystring\"}"
+    testParser jsonParser "{\"number\":true}"
+    //testParser jsonParser "{9}"
+    testParser jsonParser "{\"number\":{\"mystring\":\"mystring\"}}"
+    (*
+    testParser objectParser "{\"mystring\",{true,false,{{true}}},\"mystring\"}"*)
     0
