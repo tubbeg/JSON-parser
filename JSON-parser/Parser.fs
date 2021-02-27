@@ -7,7 +7,7 @@ open JsonString
 
 let sep : Parser<_> = ws >>. str_ws "," .>> ws
 //this needs to change
-let recordElement list = sepEndBy list sep
+let recordElement list = sepBy1 list sep
 //let recordPattern p = ws >>. stringLiteral >>. str_ws ":" >>. p
 //let parseRecordElement p = recordElement (recordPattern p)
 
