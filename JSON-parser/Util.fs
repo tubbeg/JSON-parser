@@ -13,6 +13,10 @@ let str = pstring
 let str_ws s = ws .>> str s
 let run2 p strContent file = runParserOnString p () file strContent
 
+let readLinesFromFile path = IO.File.ReadLines(path)
+
+let convertSeqToString s = s |> Seq.concat |> Seq.toArray |> System.String
+
 
 let testParser parser testCase =
     let result = run parser testCase

@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="jsonTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Util.fs" />
     <Compile Include="JsonNode.fs" />
     <Compile Include="JsonString.fs" />

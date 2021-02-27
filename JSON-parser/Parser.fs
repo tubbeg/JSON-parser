@@ -47,10 +47,12 @@ let objectParser = betweenBrackets (recordElement jsonValue)
 let objectConstant = objectParser |>> (fun n -> Obj(n))
 
 let listOfParsers =
-    stringLiteral >>. (str_ws ":") >>. (objectConstant
-    <|> trueConstant
-    <|> falseConstant
-    <|> intConstant
-    <|> stringConstant)
+    stringLiteral >>. (str_ws ":") >>. ws >>. (
+        objectConstant
+        <|> trueConstant
+        <|> falseConstant
+        <|> intConstant
+        <|> stringConstant
+    )
     
-let jsonParser = betweenBrackets jsonValue
+//let jsonParser = betweenBrackets jsonValue
