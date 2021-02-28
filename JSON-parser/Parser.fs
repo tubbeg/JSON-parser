@@ -8,8 +8,6 @@ open JsonString
 let sep : Parser<_> = ws >>. str_ws "," .>> ws
 //this needs to change
 let recordElement list = sepBy1 (ws >>. list .>> ws) sep
-//let recordPattern p = ws >>. stringLiteral >>. str_ws ":" >>. p
-//let parseRecordElement p = recordElement (recordPattern p)
 
 (*This is necessary for recursive grammar, and also possibly because
 of F# type inference. What createParserForwardedToRef does is
@@ -50,12 +48,10 @@ let arrayParser = betweenBrackets (recordElement jsonValue)
 
 let arrayConstant = arrayParser |>> (fun a -> Node.Array((a |> List.toArray)))
 
-let keyPattern = 
-    stringLiteral >>. (str_ws ":") >>. ws
+let keyPattern = stringLiteral >>. (str_ws ":") >>. ws
     
 let objectParser = betweenBraces (recordElement (keyPattern >>. jsonValue))
 let objectConstant = objectParser |>> (fun n -> Obj(n))
-
 
 let listOfParsers =
     arrayConstant
@@ -64,7 +60,3 @@ let listOfParsers =
     <|> falseConstant
     <|> intConstant
     <|> stringConstant
-
-
-
-//let jsonParser = betweenBrackets jsonValue
