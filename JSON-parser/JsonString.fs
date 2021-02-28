@@ -14,8 +14,7 @@ let anyChar : Parser<_> = satisfy (fun c -> c <> '\\' && c <> '"')
 
 let stringLiteral : Parser<_> =
 
-    // can't handle escape characters right now :/
-    let parseManyChar = manyChars (anyChar) // <|> escape char )
+    let parseManyChar = manyChars (anyChar)// <|> escapeChar)
 
     //this is basically what Fparsec between does, but I find this
     //this easier to read

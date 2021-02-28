@@ -7,7 +7,7 @@ open JsonString
 
 let sep : Parser<_> = ws >>. str_ws "," .>> ws
 //this needs to change
-let recordElement list = sepBy1 list sep
+let recordElement list = sepBy1 (ws >>. list .>> ws) sep
 //let recordPattern p = ws >>. stringLiteral >>. str_ws ":" >>. p
 //let parseRecordElement p = recordElement (recordPattern p)
 
@@ -45,7 +45,7 @@ let betweenBraces prsr =
   
 let betweenBrackets prsr =
     ws >>. (str_ws "[" >>. ws >>. prsr .>> ws .>> str_ws "]")
-
+    
 let arrayParser = betweenBrackets (recordElement jsonValue)
 
 let arrayConstant = arrayParser |>> (fun a -> Node.Array((a |> List.toArray)))
@@ -58,14 +58,12 @@ let objectConstant = objectParser |>> (fun n -> Obj(n))
 
 
 let listOfParsers =
-    //keyPattern >>. (
-        arrayConstant
-        <|> objectConstant
-        <|> trueConstant
-        <|> falseConstant
-        <|> intConstant
-        <|> stringConstant
-    //)
+    arrayConstant
+    <|> objectConstant
+    <|> trueConstant
+    <|> falseConstant
+    <|> intConstant
+    <|> stringConstant
 
 
 

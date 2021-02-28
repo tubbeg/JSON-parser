@@ -10,7 +10,7 @@ type NotYetDefined = NotDefined
 let ws = spaces
 let num = pint32
 let str = pstring
-let str_ws s = ws .>> str s
+let str_ws s = ws >>. str s
 let run2 p strContent file = runParserOnString p () file strContent
 
 let readFileLinesToSeq path = IO.File.ReadLines(path)
